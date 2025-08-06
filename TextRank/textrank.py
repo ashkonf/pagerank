@@ -3,7 +3,6 @@ import sys
 import collections
 
 import nltk
-import nltk.tokenize
 
 sys.path.append(".")
 

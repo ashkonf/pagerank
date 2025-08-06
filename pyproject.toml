@@ -1,0 +1,15 @@
+[project]
+name = "pagerank"
+version = "0.1.0"
+description = "Python implementation of PageRank"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+    "pandas",
+    "nltk",
+]
+
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
