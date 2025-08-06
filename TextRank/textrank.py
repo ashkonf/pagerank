@@ -1,10 +1,8 @@
 import os
 import sys
-import copy
 import collections
 
 import nltk
-import nltk.tokenize
 
 sys.path.append(".")
 

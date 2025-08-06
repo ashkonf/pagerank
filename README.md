@@ -10,14 +10,27 @@ A Python implementation of Google's famous PageRank algorithm.
     - [Function: textrank](#function-textrank)
     - [Function: apply_text_rank](#function-apply-text-rank)
 
-## Setup
-There's not much to it - just include the `pagerank.py` file in your project, make sure you've installed the dependencies listed below, and use away!
+This project targets Python 3 and uses [uv](https://github.com/astral-sh/uv) for
+dependency management. To create a virtual environment and install
+dependencies, run:
+
+```
+uv sync
+```
+
+You can then execute modules with `uv run`, for example:
+
+```
+uv run python TextRank/textrank.py
+```
 
 ### Dependencies
-This module relies on two relatively standard Python libraries:
 
-1. [Numpy](http://www.numpy.org/)
-2. [Pandas](http://pandas.pydata.org/)
+This module relies on a few commonly used Python libraries:
+
+1.  [Numpy](http://www.numpy.org/)
+2.  [Pandas](http://pandas.pydata.org/)
+3.  [NLTK](https://www.nltk.org/)
 
 ## Usage
 The `pagerank` module exports one public function:
@@ -47,7 +60,7 @@ An implementation of TextRank and three sample stories are included as a demonst
 The module's main method applies TextRank to three fairy tales—Rapunzel, Cinderella and Beauty and the Beast—and prints out the results. To run this example, simply navigate to the `TextRank` directory and run:
 
 ```bash
-python textrank/textrank.py
+     uv run python TextRank/textrank.py
 ```
 
 For more information about TextRank, see the [original paper](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) that proposed it.
