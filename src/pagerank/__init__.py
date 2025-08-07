@@ -1,7 +1,6 @@
 import math
 from typing import Mapping, Sequence, cast
 
-import numpy
 import pandas
 
 # Generalized matrix operations:
@@ -16,12 +15,7 @@ def __extract_nodes(matrix: pandas.DataFrame) -> set[str]:
     Returns:
         A set containing all unique node names from both rows and columns.
     """
-    nodes = set()
-    for col_key in matrix:
-        nodes.add(col_key)
-    for row_key in matrix.T:
-        nodes.add(row_key)
-    return nodes
+    return set(matrix.columns) | set(matrix.index)
 
 
 def __make_square(
@@ -37,18 +31,7 @@ def __make_square(
     Returns:
         A square pandas DataFrame with all keys as both rows and columns.
     """
-    matrix = matrix.copy()
-
-    def insert_missing_columns(matrix: pandas.DataFrame) -> pandas.DataFrame:
-        for key in keys:
-            if key not in matrix:
-                matrix[key] = pandas.Series(default, index=matrix.index)
-        return matrix
-
-    matrix = insert_missing_columns(matrix)
-    matrix = insert_missing_columns(matrix.T).T
-
-    return matrix.fillna(default)
+    return matrix.reindex(index=keys, columns=keys, fill_value=default).fillna(default)
 
 
 def __ensure_rows_positive(matrix: pandas.DataFrame) -> pandas.DataFrame:
@@ -60,13 +43,10 @@ def __ensure_rows_positive(matrix: pandas.DataFrame) -> pandas.DataFrame:
     Returns:
         A pandas DataFrame where all rows have positive sums.
     """
-    matrix = matrix.T
-    for col_key in matrix:
-        if matrix[col_key].sum() == 0.0:
-            matrix[col_key] = pandas.Series(
-                numpy.ones(len(matrix[col_key])), index=matrix.index
-            )
-    return matrix.T
+    zero_rows = matrix.sum(axis=1) == 0.0
+    if zero_rows.any():
+        matrix.loc[zero_rows] = 1.0
+    return matrix
 
 
 def __normalize_rows(matrix: pandas.DataFrame) -> pandas.DataFrame:
