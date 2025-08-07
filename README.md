@@ -9,17 +9,26 @@
     A lightweight, well-tested Python implementation of Google's PageRank algorithm and TextRank for keyword extraction.
   </p>
   <p>
-    <a href="https://github.com/ashkonf/pagerank/actions/workflows/test.yml">
-      <img alt="Tests" src="https://github.com/ashkonf/pagerank/actions/workflows/test.yml/badge.svg">
+    <a href="https://pypi.org/project/pagerank/">
+      <img alt="PyPI" src="https://img.shields.io/pypi/v/pagerank.svg">
+    </a>
+    <a href="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml">
+      <img alt="CI" src="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml/badge.svg">
     </a>
     <a href="https://codecov.io/gh/ashkonf/pagerank">
       <img alt="Codecov" src="https://codecov.io/gh/ashkonf/pagerank/graph/badge.svg?token=YOUR_TOKEN_HERE"/>
     </a>
-    <a href="https://pypi.org/project/pagerank/">
-      <img alt="PyPI" src="https://img.shields.io/pypi/v/pagerank.svg">
+    <a href="https://github.com/ashkonf/pagerank/blob/main/LICENSE">
+      <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg"/>
     </a>
-    <a href="https://pycqa.github.io/isort/">
-      <img alt="Imports: isort" src="https://img.shields.io/badge/imports-isort-ef8336.svg?style=flat-square">
+    <a href="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml">
+      <img alt="Pytest" src="https://img.shields.io/github/actions/workflow/status/ashkonf/pagerank/ci.yml?label=pytest&logo=pytest"/>
+    </a>
+    <a href="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml">
+      <img alt="Pyright" src="https://img.shields.io/github/actions/workflow/status/ashkonf/pagerank/ci.yml?label=pyright&logo=python"/>
+    </a>
+    <a href="https://results.pre-commit.ci/latest/github/ashkonf/pagerank/main">
+      <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/ashkonf/pagerank/main.svg"/>
     </a>
   </p>
 </div>
