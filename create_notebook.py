@@ -1,4 +1,5 @@
 import json
+import logging
 
 notebook = {
     "cells": [
@@ -166,4 +167,6 @@ notebook = {
 with open("demo.ipynb", "w") as f:
     json.dump(notebook, f, indent=2)
 
-print("Jupyter notebook created successfully!")
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.info("Jupyter notebook created successfully!")

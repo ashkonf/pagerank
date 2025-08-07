@@ -5,6 +5,8 @@ A lightweight Python implementation of Google's PageRank algorithm with an examp
 ## Table of Contents
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+  - [PageRank Example](#pagerank-example)
+  - [TextRank Example](#textrank-example)
 - [PageRank Usage](#pagerank-usage)
 - [TextRank Demo](#textrank-demo)
 - [Development](#development)
@@ -16,6 +18,10 @@ A lightweight Python implementation of Google's PageRank algorithm with an examp
   - [PageRank Module](#pagerank-module)
   - [TextRank Module](#textrank-module)
 - [Examples](#examples)
+  - [Basic PageRank](#basic-pagerank)
+  - [Advanced PageRank with Custom Parameters](#advanced-pagerank-with-custom-parameters)
+  - [TextRank for Keyword Extraction](#textrank-for-keyword-extraction)
+  - [Custom TextRank Analysis](#custom-textrank-analysis)
 - [Contributing](#contributing)
 - [License](#license)
 

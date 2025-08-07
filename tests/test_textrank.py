@@ -1,5 +1,3 @@
-"""Tests for the TextRank module."""
-
 import os
 import tempfile
 from unittest.mock import mock_open, patch
