@@ -1,16 +1,18 @@
 <div align="center">
-  # pagerank
 
-  [![PyPI version](https://img.shields.io/pypi/v/your-package)](link-to-pypi-page)
-  [![codecov](https://codecov.io/github/ashkonf/html-table-scraper/graph/badge.svg?token=7Y596J8IYZ)](https://codecov.io/github/ashkonf/pagerank)
-  [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-  [![Pytest](https://img.shields.io/badge/pytest-✓-brightgreen)](https://docs.pytest.org)
-  [![Pyright](https://img.shields.io/badge/pyright-✓-green)](https://github.com/microsoft/pyright)
-  [![Ruff](https://img.shields.io/badge/ruff-✓-blue?logo=ruff)](https://github.com/astral-sh/ruff)
-  [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-  [![Build Status](https://img.shields.io/github/actions/workflow/status/ashkonf/pagerank/ci.yml?branch=main)](https://github.com/ashkonf/pagerank/actions/workflows/ci.yml?query=branch%3Amain)
+# pagerank
 
-  A lightweight, well-tested Python implementation of Google's PageRank algorithm and TextRank for keyword extraction.
+[![PyPI version](https://img.shields.io/pypi/v/your-package)](link-to-pypi-page)
+[![codecov](https://codecov.io/github/ashkonf/html-table-scraper/graph/badge.svg?token=7Y596J8IYZ)](https://codecov.io/github/ashkonf/pagerank)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Pytest](https://img.shields.io/badge/pytest-✓-brightgreen)](https://docs.pytest.org)
+[![Pyright](https://img.shields.io/badge/pyright-✓-green)](https://github.com/microsoft/pyright)
+[![Ruff](https://img.shields.io/badge/ruff-✓-blue?logo=ruff)](https://github.com/astral-sh/ruff)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ashkonf/pagerank/ci.yml?branch=main)](https://github.com/ashkonf/pagerank/actions/workflows/ci.yml?query=branch%3Amain)
+
+A lightweight, well-tested Python implementation of Google's PageRank algorithm and TextRank for keyword extraction.
+
 </div>
 
 ## Features
