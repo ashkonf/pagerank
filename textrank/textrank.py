@@ -1,11 +1,8 @@
 import collections
 import os
-import sys
 from typing import Any, List
 
 import nltk
-
-sys.path.append(".")
 
 import pagerank
 
