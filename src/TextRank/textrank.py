@@ -1,9 +1,12 @@
 import collections
+import logging
 import os
 from typing import Any, List
 
 import nltk
 import pagerank
+
+logger = logging.getLogger(__name__)
 
 """
     textrank.py
@@ -177,36 +180,33 @@ def __tokenize_words(sentence: str) -> List[str]:
 
 
 def apply_text_rank(file_name: str, title: str = "a document") -> None:
-    """Apply TextRank algorithm to a text file and print results.
+    """Apply TextRank algorithm to a text file and log results.
 
     This function is a wrapper around the textrank function. It accepts a plain text
     document as its input, transforms that document into the data format expected by
-    the textrank function, calls textrank to perform the algorithm, and prints out
-    the results along with progress indicators.
+    the textrank function, calls textrank to perform the algorithm, and logs the
+    results along with progress indicators.
 
     Args:
         file_name: Name or full path of the file that contains the document the
             TextRank algorithm will be applied to.
-        title: The document's title, used only in printed progress indicators.
+        title: The document's title, used only in progress indicators.
 
     Returns:
-        None. This function prints its results rather than returning them.
+        None. This function logs its results rather than returning them.
     """
-    print()
-    print(f'Reading "{title}" ...')
+    logger.info('Reading "%s" ...', title)
     file_path = os.path.join(os.path.dirname(__file__), file_name)
     document = open(file_path).read()
     document = __ascii_only(document)
 
-    print(f'Applying TextRank to "{title}" ...')
+    logger.info('Applying TextRank to "%s" ...', title)
     keyword_scores = textrank(document)
 
-    print()
     header = f'Keyword Significance Scores for "{title}":'
-    print(header)
-    print("-" * len(header))
-    print(keyword_scores)
-    print()
+    logger.info(header)
+    logger.info("-" * len(header))
+    logger.info("%s", keyword_scores)
 
 
 def main() -> None:
@@ -217,4 +217,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()
