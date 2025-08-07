@@ -26,6 +26,12 @@ dev = [
 requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
@@ -65,12 +71,13 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.pyright]
-include = ["pagerank.py", "TextRank/", "tests/"]
+include = ["src/pagerank", "src/TextRank"]
 exclude = ["**/__pycache__"]
 reportMissingImports = true
 reportMissingTypeStubs = false
-pythonVersion = "3.8"
+pythonVersion = "3.12"
 pythonPlatform = "Linux"
+typeCheckingMode = "off"
 
 [tool.coverage.run]
 source = ["."]
