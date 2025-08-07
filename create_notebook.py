@@ -26,7 +26,7 @@ notebook = {
                 "sys.path.append('.')\n",
                 "\n",
                 "import pagerank\n",
-                "from TextRank.textrank import textrank, apply_text_rank\n",
+                "from textrank import textrank, apply_text_rank\n",
                 "import pandas as pd\n",
                 "import matplotlib.pyplot as plt\n",
                 "import seaborn as sns\n",

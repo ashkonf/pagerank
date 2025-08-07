@@ -71,12 +71,11 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.pyright]
-include = ["src/pagerank", "src/TextRank"]
+include = ["src"]
 exclude = ["**/__pycache__"]
 reportMissingImports = true
 reportMissingTypeStubs = false
 pythonVersion = "3.12"
-pythonPlatform = "Linux"
 pythonPlatform = "Linux"
 typeCheckingMode = "basic"
 
