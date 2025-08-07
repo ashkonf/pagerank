@@ -161,13 +161,15 @@ def power_iteration(
         steady state probabilities. This series can be treated as a dict.
 
     Example:
+        >>> import logging
+        >>> logging.basicConfig(level=logging.INFO)
         >>> graph = {
         ...     "A": {"B": 1, "C": 1},
         ...     "B": {"C": 1},
         ...     "C": {"A": 1},
         ... }
         >>> scores = power_iteration(graph)
-        >>> print(scores)
+        >>> logging.info(scores)
     """
     transition_weights_df = pandas.DataFrame(transition_weights)
     nodes = __extract_nodes(transition_weights_df)

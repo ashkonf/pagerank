@@ -11,6 +11,7 @@ dependencies = [
     "matplotlib>=3.7.5",
     "seaborn>=0.13.2",
     "ipykernel>=6.29.5",
+    "pre-commit>=3.5.0",
 ]
 
 [project.optional-dependencies]
@@ -34,19 +35,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = [
-    "--cov=.",
-    "--cov-report=term-missing",
-    "--cov-report=html",
-    "--strict-markers",
-    "-v"
-]
 
 [tool.ruff]
 line-length = 88

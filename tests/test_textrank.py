@@ -124,16 +124,16 @@ class TestApplyTextRank:
             temp_path = f.name
 
         try:
-            with patch("builtins.print") as mock_print:
+            with patch("textrank.textrank.logger.info") as mock_info:
                 with patch("builtins.open", mock_open(read_data=content)):
                     apply_text_rank(os.path.basename(temp_path), "Test Document")
 
-                    assert mock_print.called
-                    print_calls = [
-                        call[0][0] for call in mock_print.call_args_list if call[0]
+                    assert mock_info.called
+                    info_calls = [
+                        call[0][0] for call in mock_info.call_args_list if call[0]
                     ]
-                    assert any("Reading" in str(call) for call in print_calls)
-                    assert any("Applying TextRank" in str(call) for call in print_calls)
+                    assert any("Reading" in str(call) for call in info_calls)
+                    assert any("Applying TextRank" in str(call) for call in info_calls)
         finally:
             os.unlink(temp_path)
 
@@ -146,7 +146,7 @@ class TestApplyTextRank:
             temp_path = f.name
 
         try:
-            with patch("builtins.print"):
+            with patch("textrank.textrank.logger.info"):
                 with patch("builtins.open", mock_open(read_data=content)):
                     result = apply_text_rank(os.path.basename(temp_path))
 

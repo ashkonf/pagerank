@@ -2,6 +2,7 @@ import collections
 import logging
 import os
 from typing import Any, List
+
 import nltk
 
 import pagerank
@@ -80,9 +81,11 @@ def textrank(
         that are classified as having relevant POS tags are present in the result.
 
     Example:
+        >>> import logging
+        >>> logging.basicConfig(level=logging.INFO)
         >>> document = "The cat sat on the mat. The cat was happy."
         >>> scores = textrank(document)
-        >>> print(scores.head())
+        >>> logging.info(scores.head())
     """
     if relevant_pos_tags is None:
         relevant_pos_tags = ["NN", "ADJ"]

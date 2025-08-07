@@ -1,16 +1,26 @@
 # pagerank
 
 <div align="center">
-  <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=PageRank" alt="PageRank Logo">
+  <a href="https://github.com/ashkonf/pagerank">
+    <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=PageRank" alt="PageRank Logo">
+  </a>
   <h1>PageRank and TextRank</h1>
   <p>
     A lightweight, well-tested Python implementation of Google's PageRank algorithm and TextRank for keyword extraction.
   </p>
   <p>
-    <!-- Badges will go here -->
-    <a href="https://github.com/ashkonf/pagerank/actions"><img alt="Tests" src="https://github.com/ashkonf/pagerank/actions/workflows/test.yml/badge.svg"></a>
-    <a href="https://codecov.io/gh/ashkonf/PageRank"><img src="https://codecov.io/gh/ashkonf/PageRank/graph/badge.svg?token=YOUR_TOKEN_HERE"/></a>
-    <a href="https://pypi.org/project/pagerank/"><img alt="PyPI" src="https://img.shields.io/pypi/v/pagerank.svg"></a>
+    <a href="https://github.com/ashkonf/pagerank/actions/workflows/test.yml">
+      <img alt="Tests" src="https://github.com/ashkonf/pagerank/actions/workflows/test.yml/badge.svg">
+    </a>
+    <a href="https://codecov.io/gh/ashkonf/pagerank">
+      <img alt="Codecov" src="https://codecov.io/gh/ashkonf/pagerank/graph/badge.svg?token=YOUR_TOKEN_HERE"/>
+    </a>
+    <a href="https://pypi.org/project/pagerank/">
+      <img alt="PyPI" src="https://img.shields.io/pypi/v/pagerank.svg">
+    </a>
+    <a href="https://pycqa.github.io/isort/">
+      <img alt="Imports: isort" src="https://img.shields.io/badge/imports-isort-ef8336.svg?style=flat-square">
+    </a>
   </p>
 </div>
 
@@ -40,16 +50,16 @@
 This project uses `uv` for dependency management.
 
 ```bash
-# Install required dependencies
+# Install only the required dependencies for production use
 uv sync
 
-# Install all development dependencies
+# Install all development dependencies for contributing
 uv sync --all-extras
 ```
 
-You will also need to download NLTK data for TextRank:
+You will also need to download NLTK data for TextRank. A helper script is provided:
 ```bash
-uv run python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
+uv run python download_nltk_data.py
 ```
 
 ## Quick Start
@@ -85,8 +95,8 @@ Extract the most relevant keywords from a piece of text.
 from textrank import textrank
 
 document = """
-Natural language processing is a subfield of linguistics, computer science, 
-and artificial intelligence concerned with the interactions between computers 
+Natural language processing is a subfield of linguistics, computer science,
+and artificial intelligence concerned with the interactions between computers
 and human language.
 """
 
@@ -131,14 +141,14 @@ This demo covers:
 
 ### `textrank.textrank`
 
-`textrank(document, window_size=2, rsp=0.15, relevant_pos_tags=["NN", "ADJ"])`
+`textrank(document, window_size=2, rsp=0.15, relevant_pos_tags=["NN", "NNP", "ADJ"])`
 
 | Parameter | Type | Description | Default |
 |---|---|---|---|
 | `document` | `str` | Text to analyze. | Required |
 | `window_size` | `int` | Co-occurrence window size. | `2` |
 | `rsp` | `float` | Random surfer probability. | `0.15` |
-| `relevant_pos_tags`| `list[str]` | POS tags to consider keywords. | `["NN", "ADJ"]` |
+| `relevant_pos_tags`| `list[str]` | POS tags to consider as keywords. | `["NN", "NNP", "ADJ"]` |
 
 **Returns:** `pandas.Series` with words as keys and TextRank scores as values, sorted descending.
 
