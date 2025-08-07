@@ -9,13 +9,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: '3.12'
+          version: "latest"
+      - name: Set up Python
+        run: uv python install 3.12
       - name: Install dependencies
-        run: |
-          pip install pyflakes pytest
-      - name: Lint
-        run: pyflakes pagerank.py TextRank/textrank.py
-      - name: Test
-        run: pytest
+        run: uv sync --all-extras
+      - name: Download NLTK data
+        run: uv run python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
+      - name: Run ruff check
+        run: uv run ruff check .
+      - name: Run ruff format check
+        run: uv run ruff format --check .
+      - name: Run pyright
+        run: uv run pyright .
+      - name: Run tests with coverage
+        run: uv run pytest --cov=. --cov-report=xml --cov-report=term-missing
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false

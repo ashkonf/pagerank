@@ -3,40 +3,46 @@
 A lightweight Python implementation of Google's PageRank algorithm with an example TextRank application for keyword extraction.
 
 ## Table of Contents
-- [Setup](#setup)
-  - [Dependencies](#dependencies)
-- [Usage](#usage)
-- [Example Usage: TextRank](#example-usage-textrank)
-  - [TextRank Implementation](#textrank-implementation)
-    - [Function: textrank](#function-textrank)
-    - [Function: apply_text_rank](#function-apply-text-rank)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [PageRank Usage](#pagerank-usage)
+- [TextRank Demo](#textrank-demo)
+- [Development](#development)
+  - [Setting Up Development Environment](#setting-up-development-environment)
+  - [Running Tests](#running-tests)
+  - [Code Quality Tools](#code-quality-tools)
+  - [Pre-commit Hooks](#pre-commit-hooks)
+- [API Reference](#api-reference)
+  - [PageRank Module](#pagerank-module)
+  - [TextRank Module](#textrank-module)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
 
-This project targets Python 3 and uses [uv](https://github.com/astral-sh/uv) for
-dependency management. To create a virtual environment and install
-dependencies, run:
+## Installation
 
-```
+This project requires Python 3.8+ and uses [uv](https://github.com/astral-sh/uv) for dependency management.
+
+To install dependencies:
+
+```bash
 uv sync
 ```
 
-You can then execute modules with `uv run`, for example:
-
-```
-uv run python TextRank/textrank.py
-```
-
-Install dependencies with:
+For development with additional tools:
 
 ```bash
-pip install -r requirements.txt
+uv sync --all-extras
 ```
 
-## PageRank usage
+## Quick Start
+
+### PageRank Example
 
 ```python
 from pagerank import power_iteration
 
-# edges represented as adjacency weights
+# Define a graph as adjacency weights
 graph = {
     "A": {"B": 1, "C": 1},
     "B": {"C": 1},
@@ -47,109 +53,303 @@ scores = power_iteration(graph)
 print(scores)
 ```
 
-## TextRank demo
+### TextRank Example
 
-Run the bundled TextRank example to extract keywords from sample stories:
+```python
+from TextRank import textrank
+
+document = "The cat sat on the mat. The cat was happy."
+keyword_scores = textrank(document)
+print(keyword_scores.head())
+```
+
+## PageRank Usage
+
+The `pagerank` module provides a Python implementation of Google's PageRank algorithm using power iteration. It can handle both dictionary and list representations of graphs.
+
+```python
+from pagerank import power_iteration
+
+# Using dictionary format (recommended)
+graph = {
+    "Page1": {"Page2": 1, "Page3": 2},
+    "Page2": {"Page3": 1},
+    "Page3": {"Page1": 1},
+}
+
+scores = power_iteration(graph, rsp=0.15, epsilon=0.00001, max_iterations=1000)
+```
+
+## TextRank Demo
+
+Run the bundled TextRank example to extract keywords from sample fairy tales:
 
 ```bash
-python TextRank/textrank.py
+uv run python TextRank/textrank.py
 ```
+
+This will analyze three classic fairy tales (Cinderella, Beauty and the Beast, and Rapunzel) and display keyword significance scores.
 
 ## Development
 
-Run lint checks and tests before committing:
+### Setting Up Development Environment
+
+1. Clone the repository:
+```bash
+git clone https://github.com/ashkonf/PageRank.git
+cd PageRank
+```
+
+2. Install dependencies with development tools:
+```bash
+uv sync --all-extras
+```
+
+3. Download required NLTK data:
+```bash
+uv run python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
+```
+
+### Running Tests
+
+Run the full test suite with coverage:
 
 ```bash
-python -m pyflakes pagerank.py TextRank/textrank.py
-python -m pytest
+uv run pytest
 ```
+
+Run tests with detailed coverage report:
+
+```bash
+uv run pytest --cov=. --cov-report=term-missing --cov-report=html
+```
+
+Run specific test files:
+
+```bash
+uv run pytest tests/test_pagerank.py
+uv run pytest tests/test_textrank.py
+```
+
+### Code Quality Tools
+
+This project uses several code quality tools that can be run individually:
+
+#### Ruff (Linting and Formatting)
+
+Check for linting issues:
+```bash
+uv run ruff check .
+```
+
+Auto-fix linting issues:
+```bash
+uv run ruff check . --fix
+```
+
+Format code:
+```bash
+uv run ruff format .
+```
+
+Check formatting without making changes:
+```bash
+uv run ruff format . --check
+```
+
+#### Pyright (Type Checking)
+
+Run type checking:
+```bash
+uv run pyright .
+```
+
+Run type checking on specific files:
+```bash
+uv run pyright pagerank.py
+uv run pyright TextRank/textrank.py
+```
+
+### Pre-commit Hooks
+
+Install pre-commit hooks to automatically run quality checks before commits:
+
+```bash
+uv run pre-commit install
+```
+
+Run pre-commit hooks manually:
+```bash
+uv run pre-commit run --all-files
+```
+
+The pre-commit configuration runs:
+- `ruff check` with auto-fix
+- `ruff format` for code formatting
+- `pyright` for type checking
+- `pytest` for running tests
+
+## API Reference
+
+### PageRank Module
+
+#### `power_iteration(transition_weights, rsp=0.15, epsilon=0.00001, max_iterations=1000)`
+
+Applies the PageRank algorithm to determine steady-state probabilities for a graph.
+
+**Parameters:**
+
+| Name | Type | Description | Default |
+|------|------|-------------|---------|
+| `transition_weights` | `dict` or `list` | Graph representation as nested dicts or lists. Keys are node names, values are edge weights. | Required |
+| `rsp` | `float` | Random surfer probability (1 - damping factor). Controls probability of jumping to any node. | `0.15` |
+| `epsilon` | `float` | Convergence threshold. Iteration stops when successive approximations differ by less than this value. | `0.00001` |
+| `max_iterations` | `int` | Maximum iterations before termination, even without convergence. | `1000` |
+
+**Returns:**
+- `pandas.Series`: Node names as keys, steady-state probabilities as values. Can be treated as a dictionary.
+
+**Example:**
+```python
+graph = {"A": {"B": 1}, "B": {"A": 1}}
+scores = power_iteration(graph)
+print(f"Node A score: {scores['A']}")
+```
+
+### TextRank Module
+
+#### `textrank(document, window_size=2, rsp=0.15, relevant_pos_tags=["NN", "ADJ"])`
+
+Implements TextRank algorithm for keyword extraction from documents.
+
+**Parameters:**
+
+| Name | Type | Description | Default |
+|------|------|-------------|---------|
+| `document` | `str` | Input document text. Should contain standard ASCII characters. | Required |
+| `window_size` | `int` | Window size for word co-occurrence. Words within this distance are considered connected. | `2` |
+| `rsp` | `float` | Random surfer probability for PageRank algorithm. | `0.15` |
+| `relevant_pos_tags` | `list[str]` | Part-of-speech tags to include. Common values: "NN" (nouns), "JJ" (adjectives). | `["NN", "ADJ"]` |
+
+**Returns:**
+- `pandas.Series`: Words as keys, significance scores as values, sorted by score (descending).
+
+#### `apply_text_rank(file_name, title="a document")`
+
+Convenience function to apply TextRank to a text file and print results.
+
+**Parameters:**
+
+| Name | Type | Description | Default |
+|------|------|-------------|---------|
+| `file_name` | `str` | Path to text file (relative to TextRank directory). | Required |
+| `title` | `str` | Document title for display purposes. | `"a document"` |
+
+**Returns:**
+- `None`: Prints results to console.
+
+## Examples
+
+### Basic PageRank
+
+```python
+from pagerank import power_iteration
+
+# Simple three-node graph
+graph = {
+    "A": {"B": 1, "C": 1},
+    "B": {"C": 1},
+    "C": {"A": 1},
+}
+
+scores = power_iteration(graph)
+print("PageRank scores:")
+for node, score in scores.items():
+    print(f"{node}: {score:.4f}")
+```
+
+### Advanced PageRank with Custom Parameters
+
+```python
+# Weighted graph with custom parameters
+weighted_graph = {
+    "Home": {"About": 2, "Products": 3, "Contact": 1},
+    "About": {"Home": 1, "Products": 1},
+    "Products": {"Home": 1, "About": 1, "Contact": 2},
+    "Contact": {"Home": 1},
+}
+
+scores = power_iteration(
+    weighted_graph,
+    rsp=0.1,  # Lower random surfer probability
+    epsilon=1e-8,  # Higher precision
+    max_iterations=2000
+)
+```
+
+### TextRank for Keyword Extraction
+
+```python
+from TextRank import textrank
+
+# Analyze a document
+document = """
+Natural language processing is a subfield of computer science and artificial intelligence.
+It focuses on the interaction between computers and human language. The goal is to enable
+computers to understand, interpret, and generate human language in a valuable way.
+"""
+
+# Extract keywords (nouns and adjectives)
+keywords = textrank(document, window_size=3, relevant_pos_tags=["NN", "JJ"])
+
+print("Top 10 keywords:")
+for word, score in keywords.head(10).items():
+    print(f"{word}: {score:.4f}")
+```
+
+### Custom TextRank Analysis
+
+```python
+# Focus only on nouns with larger window
+noun_keywords = textrank(
+    document,
+    window_size=5,
+    relevant_pos_tags=["NN", "NNS", "NNP", "NNPS"],  # All noun types
+    rsp=0.2
+)
+
+# Focus only on adjectives
+adj_keywords = textrank(
+    document,
+    window_size=2,
+    relevant_pos_tags=["JJ", "JJR", "JJS"],  # All adjective types
+    rsp=0.15
+)
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes and add tests
+4. Run the test suite: `uv run pytest`
+5. Run code quality checks: `uv run pre-commit run --all-files`
+6. Commit your changes: `git commit -am 'Add feature'`
+7. Push to the branch: `git push origin feature-name`
+8. Create a Pull Request
+
+Please ensure all tests pass and code quality checks are satisfied before submitting a PR.
 
 ## License
 
-Apache-2.0
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
 
-This module relies on a few commonly used Python libraries:
+---
 
-1.  [Numpy](http://www.numpy.org/)
-2.  [Pandas](http://pandas.pydata.org/)
-3.  [NLTK](https://www.nltk.org/)
+**Dependencies:**
+- [NumPy](https://numpy.org/) - Numerical computing
+- [Pandas](https://pandas.pydata.org/) - Data manipulation and analysis
+- [NLTK](https://www.nltk.org/) - Natural language processing
 
-## Usage
-The `pagerank` module exports one public function:
-
-```python
-power_iteration(transition_weights, rsp=0.15, epsilon=0.00001, max_iterations=1000)
-```
-
-This function applies the PageRank algorithm to a provided graph to determine the steady probabilities with which a random walk through the graph will end up at each node. It uses power iteration, an algorithm that iteratively refines the steady state probabilities until convergence. This algorithm is guaranteed to converge to the correct probabilities for ergodic Markov chains, which PageRank graphs are.
-
-### Arguments
-
-| Name | Type | Description | Optional? | Default |
-|------|------|-------------|-----------|---------|
-| `transition_weights` | `dict` or `list` | Sparse representation of the graph as nested dicts or lists. Keys correspond to node names and values to weights. | No | — |
-| `rsp` | `float` | Random surfer probability controlling the chance of jumping to any node. | Yes | `0.15` |
-| `epsilon` | `float` | Threshold of convergence; iteration stops when successive approximations are closer than this value. | Yes | `0.00001` |
-| `max_iterations` | `int` | Maximum number of iterations before termination even without convergence. | Yes | `1000` |
-
-Note that elements of `transition_weights` need not be probabilities (rows need not be normalized), and the random surfer probabilities should not be incorporated into it. The `power_iteration` function will perform normalization and integrate the random surfer probabilities.
-
-Return value: This function returns a Pandas series whose keys are node names and whose values are the corresponding steady state probabilities. This series can be treated as a dict.
-
-## Example Usage: TextRank
-An implementation of TextRank and three sample stories are included as a demonstration of the PageRank module. TextRank is an unsupervised keyword significance scoring algorithm that applies PageRank to a graph built from words found in a document to determine the significance of each word. The `textrank` module, located in the `TextRank` directory, implements this algorithm.
-
-The module's main method applies TextRank to three fairy tales—Rapunzel, Cinderella and Beauty and the Beast—and prints out the results. To run this example, simply navigate to the `TextRank` directory and run:
-
-```bash
-     uv run python TextRank/textrank.py
-```
-
-For more information about TextRank, see the [original paper](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) that proposed it.
-
-### TextRank Implementation
-The `textrank` module also exports two public functions:
-
-```python
-textrank(document, window_size=2, rsp=0.15, relevant_pos_tags=["NN", "ADJ"])
-apply_text_rank(file_name, title="a document")
-```
-
-#### Function: textrank
-
-```python
-textrank(document, window_size=2, rsp=0.15, relevant_pos_tags=["NN", "ADJ"])
-```
-
-The `textrank` function implements the TextRank algorithm. It creates a graph representing the document provided to it as an argument, applies the PageRank algorithm to that graph, and returns a list of words in the document sorted in descending order of node weights. The graph representing the document is created using the words found in the document as nodes and the frequency with which words co-occur in close proximity as weights.
-
-Arguments:
-
-| Name | Type | Description | Optional? | Default |
-|------|------|-------------|-----------|---------|
-| `document` | `str` | A string representing a document. All characters must be standard ASCII to avoid exceptions. | No | — |
-| `window_size` | `int` | Width of the window in which two words must fall to be considered co-occurring. | Yes | `2` |
-| `rsp` | `float` | Random surfer probability that controls the chance of jumping to any node. | Yes | `0.15` |
-| `relevant_pos_tags` | `[str]` | Parts of speech to consider; by default nouns and adjectives. | Yes | `["NN", "ADJ"]` |
-
-Return Value: This function returns a list of words found in the document (filtered by parts of speech) in descending order of node weights.
-
-#### Function: apply_text_rank
-
-```python
-apply_text_rank(file_name, title="a document")
-```
-
-The `apply_text_rank` function is a wrapper around the `textrank` function. It accepts a plain text document as its input, transforms that document into the data format expected by the `textrank` function, calls `textrank` to perform the algorithm, and prints out the results along with progress indicators.
-
-Arguments:
-
-| Name | Type | Description | Optional? | Default |
-|------|------|-------------|-----------|---------|
-| `file_name` | `str` | Name or full path of the file that contains the document the TextRank algorithm will be applied to. | No | — |
-| `title` | `str` | The document's title, used only in printed progress indicators. | Yes | "a document" |
-
-Return value: This function has no return value, and instead prints out its results.
-
-If you would like to apply TextRank to a story or document of your choosing, add a plain text file containing the story to the `TextRank` directory and call the `apply_text_rank` function, passing in the name of the file and optionally the document's title.
+For more information about the TextRank algorithm, see the [original paper](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) by Mihalcea and Tarau.
 
