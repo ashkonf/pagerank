@@ -77,7 +77,8 @@ reportMissingImports = true
 reportMissingTypeStubs = false
 pythonVersion = "3.12"
 pythonPlatform = "Linux"
-typeCheckingMode = "off"
+pythonPlatform = "Linux"
+typeCheckingMode = "basic"
 
 [tool.coverage.run]
 source = ["."]
