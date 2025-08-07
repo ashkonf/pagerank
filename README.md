@@ -3,7 +3,7 @@
 # pagerank
 
 [![PyPI version](https://img.shields.io/pypi/v/your-package)](link-to-pypi-page)
-[![codecov](https://codecov.io/github/ashkonf/html-table-scraper/graph/badge.svg?token=7Y596J8IYZ)](https://codecov.io/github/ashkonf/pagerank)
+[![codecov](https://codecov.io/github/ashkonf/html-table-scraper/graph/badge.svg?token=7Y596J8IYZ)](https://codecov.io/github/ashkonf/PageRank)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Pytest](https://img.shields.io/badge/pytest-✓-brightgreen)](https://docs.pytest.org)
 [![Pyright](https://img.shields.io/badge/pyright-✓-green)](https://github.com/microsoft/pyright)
