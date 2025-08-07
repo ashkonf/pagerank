@@ -32,7 +32,6 @@ A lightweight, well-tested Python implementation of Google's PageRank algorithm 
 - [Interactive Demo](#interactive-demo)
 - [API Reference](#api-reference)
 - [Development](#development)
-- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -165,13 +164,6 @@ uv run pre-commit install
 - **Check formatting**: `uv run ruff format --check .`
 - **Check for linting errors**: `uv run ruff check .`
 - **Run type checks**: `uv run pyright .`
-
-## Roadmap
-
-- [ ] **Summarization with TextRank**: Extend the library to support text summarization.
-- [ ] **Performance Optimizations**: Investigate `scipy` sparse matrices for larger graphs.
-- [ ] **More Graph Input Formats**: Support for `networkx` and other graph library objects.
-- [ ] **Wheels for PyPI**: Publish pre-compiled wheels for faster installation.
 
 ## Contributing
 
