@@ -1,0 +1,34 @@
+[project]
+name = "pagerank"
+version = "0.1.0"
+description = "PageRank and TextRank implementation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "pandas",
+    "nltk",
+    "pytest",
+    "pytest-cov",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "ruff",
+    "pyright",
+]
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+reportMissingTypeStubs = false
+reportPrivateUsage = false
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.pytest.ini_options]
+addopts = "--cov=pagerank --cov=TextRank --cov-report=term --cov-fail-under=100"
+testpaths = ["tests"]

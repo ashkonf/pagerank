@@ -1,123 +1,107 @@
-import os
-import sys
-import copy
+from __future__ import annotations
+
 import collections
+import os
+from typing import DefaultDict, Iterable, List
 
 import nltk
-import nltk.tokenize
-
-sys.path.append(".")
+import pandas as pd
 
 import pagerank
 
-'''
-    textrank.py
-    -----------
-    This module implements TextRank, an unsupervised keyword
-    significance scoring algorithm. TextRank builds a weighted
-    graph representation of a document using words as nodes
-    and coocurrence frequencies between pairs of words as edge 
-    weights. It then applies PageRank to this graph, and 
-    treats the PageRank score of each word as its significance.
-    The original research paper proposing this algorithm is
-    available here:
-    
-        https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf
-'''
 
-## TextRank #####################################################################################
-    
-def __preprocess_document(document, relevant_pos_tags):
-    '''
-    This function accepts a string representation 
-    of a document as input, and returns a tokenized
-    list of words corresponding to that document.
-    '''
-    
+# TextRank #####################################################################################
+
+
+def __preprocess_document(document: str, relevant_pos_tags: Iterable[str]) -> List[str]:
+    """Tokenize a document and filter words by part of speech."""
+
     words = __tokenize_words(document)
     pos_tags = __tag_parts_of_speech(words)
-    
-    # Filter out words with irrelevant POS tags
-    filtered_words = []
+
+    filtered_words: List[str] = []
     for index, word in enumerate(words):
-        word = word.lower()
+        word_lower = word.lower()
         tag = pos_tags[index]
-        if not __is_punctuation(word) and tag in relevant_pos_tags:
-            filtered_words.append(word)
+        if not __is_punctuation(word_lower) and tag in relevant_pos_tags:
+            filtered_words.append(word_lower)
 
     return filtered_words
 
-def textrank(document, window_size=2, rsp=0.15, relevant_pos_tags=["NN", "ADJ"]):
-    '''
-    This function accepts a string representation
-    of a document and three hyperperameters as input.
-    It returns Pandas matrix (that can be treated
-    as a dictionary) that maps words in the
-    document to their associated TextRank significance
-    scores. Note that only words that are classified
-    as having relevant POS tags are present in the
-    map.
-    '''
-    
-    # Tokenize document:
+
+def textrank(
+    document: str,
+    window_size: int = 2,
+    rsp: float = 0.15,
+    relevant_pos_tags: Iterable[str] | None = None,
+) -> pd.Series:
+    """Apply the TextRank algorithm to a document."""
+
+    if relevant_pos_tags is None:
+        relevant_pos_tags = ["NN", "ADJ"]
+
     words = __preprocess_document(document, relevant_pos_tags)
-    
-    # Build a weighted graph where nodes are words and
-    # edge weights are the number of times words cooccur
-    # within a window of predetermined size. In doing so
-    # we double count each coocurrence, but that will not
-    # alter relative weights which ultimately determine
-    # TextRank scores.
-    edge_weights = collections.defaultdict(lambda: collections.Counter())
+
+    edge_weights: DefaultDict[str, DefaultDict[str, float]] = collections.defaultdict(
+        lambda: collections.defaultdict(float)
+    )
     for index, word in enumerate(words):
         for other_index in range(index - window_size, index + window_size + 1):
-            if other_index >= 0 and other_index < len(words) and other_index != index:
+            if 0 <= other_index < len(words) and other_index != index:
                 other_word = words[other_index]
                 edge_weights[word][other_word] += 1.0
 
-    # Apply PageRank to the weighted graph:
-    word_probabilities = pagerank.power_iteration(edge_weights, rsp=rsp)
+    word_probabilities = pagerank.power_iteration(dict(edge_weights), rsp=rsp)
     word_probabilities.sort_values(ascending=False)
 
     return word_probabilities
 
-## NLP utilities ################################################################################
 
-def __ascii_only(string):
+# NLP utilities ################################################################################
+
+
+def __ascii_only(string: str) -> str:
     return "".join([char if ord(char) < 128 else "" for char in string])
 
-def __is_punctuation(word):
-    return word in [".", "?", "!", ",", "\"", ":", ";", "'", "-"]
 
-def __tag_parts_of_speech(words):
-    return [pair[1] for pair in nltk.pos_tag(words)]
+def __is_punctuation(word: str) -> bool:
+    return word in [".", "?", "!", ",", '"', ":", ";", "'", "-"]
 
-def __tokenize_words(sentence):
+
+def __tag_parts_of_speech(words: Iterable[str]) -> List[str]:
+    return [pair[1] for pair in nltk.pos_tag(list(words))]
+
+
+def __tokenize_words(sentence: str) -> List[str]:
     return nltk.tokenize.word_tokenize(sentence)
 
-## tests ########################################################################################
 
-def apply_text_tank(file_name, title="a document"):
+# tests ########################################################################################
+
+
+def apply_text_tank(file_name: str, title: str = "a document") -> None:
     print()
-    print("Reading \"%s\" ..." % title)
+    print(f'Reading "{title}" ...')
     file_path = os.path.join(os.path.dirname(__file__), file_name)
     document = open(file_path).read()
     document = __ascii_only(document)
-    
-    print("Applying TextRank to \"%s\" ..." % title)
+
+    print(f'Applying TextRank to "{title}" ...')
     keyword_scores = textrank(document)
-    
+
     print()
-    header = "Keyword Significance Scores for \"%s\":" % title
+    header = f'Keyword Significance Scores for "{title}":'
     print(header)
     print("-" * len(header))
     print(keyword_scores)
     print()
 
-def main():
+
+def main() -> None:
     apply_text_tank("Cinderalla.txt", "Cinderalla")
     apply_text_tank("Beauty_and_the_Beast.txt", "Beauty and the Beast")
     apply_text_tank("Rapunzel.txt", "Rapunzel")
+
 
 if __name__ == "__main__":
     main()
