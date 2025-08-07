@@ -5,6 +5,8 @@ A lightweight Python implementation of Google's PageRank algorithm with an examp
 ## Table of Contents
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+  - [PageRank Example](#pagerank-example)
+  - [TextRank Example](#textrank-example)
 - [PageRank Usage](#pagerank-usage)
 - [TextRank Demo](#textrank-demo)
 - [Development](#development)
@@ -16,6 +18,10 @@ A lightweight Python implementation of Google's PageRank algorithm with an examp
   - [PageRank Module](#pagerank-module)
   - [TextRank Module](#textrank-module)
 - [Examples](#examples)
+  - [Basic PageRank](#basic-pagerank)
+  - [Advanced PageRank with Custom Parameters](#advanced-pagerank-with-custom-parameters)
+  - [TextRank for Keyword Extraction](#textrank-for-keyword-extraction)
+  - [Custom TextRank Analysis](#custom-textrank-analysis)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -56,7 +62,7 @@ print(scores)
 ### TextRank Example
 
 ```python
-from TextRank import textrank
+from textrank import textrank
 
 document = "The cat sat on the mat. The cat was happy."
 keyword_scores = textrank(document)
@@ -85,7 +91,7 @@ scores = power_iteration(graph, rsp=0.15, epsilon=0.00001, max_iterations=1000)
 Run the bundled TextRank example to extract keywords from sample fairy tales:
 
 ```bash
-uv run python TextRank/textrank.py
+uv run python -m textrank.textrank
 ```
 
 This will analyze three classic fairy tales (Cinderella, Beauty and the Beast, and Rapunzel) and display keyword significance scores.
@@ -167,7 +173,7 @@ uv run pyright .
 Run type checking on specific files:
 ```bash
 uv run pyright pagerank.py
-uv run pyright TextRank/textrank.py
+uv run pyright textrank/textrank.py
 ```
 
 ### Pre-commit Hooks
@@ -242,7 +248,7 @@ Convenience function to apply TextRank to a text file and print results.
 
 | Name | Type | Description | Default |
 |------|------|-------------|---------|
-| `file_name` | `str` | Path to text file (relative to TextRank directory). | Required |
+| `file_name` | `str` | Path to text file (relative to textrank directory). | Required |
 | `title` | `str` | Document title for display purposes. | `"a document"` |
 
 **Returns:**
@@ -290,7 +296,7 @@ scores = power_iteration(
 ### TextRank for Keyword Extraction
 
 ```python
-from TextRank import textrank
+from textrank import textrank
 
 # Analyze a document
 document = """

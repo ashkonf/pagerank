@@ -28,7 +28,7 @@ notebook = {
                 "sys.path.append('.')\n",
                 "\n",
                 "import pagerank\n",
-                "from TextRank.textrank import textrank, apply_text_rank\n",
+                "from textrank import textrank, apply_text_rank\n",
                 "import pandas as pd\n",
                 "import matplotlib.pyplot as plt\n",
                 "import seaborn as sns\n",
@@ -40,7 +40,7 @@ notebook = {
                 "logging.basicConfig(level=logging.INFO)\n",
                 "\n",
                 'logging.info("Setup complete!")',
-            ],
+            ]
         },
         {
             "cell_type": "markdown",
@@ -172,4 +172,5 @@ with open("demo.ipynb", "w") as f:
     json.dump(notebook, f, indent=2)
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 logger.info("Jupyter notebook created successfully!")
