@@ -9,8 +9,17 @@ There's not much to it - just include the pagerank.py file in your project, make
 
 This module relies on two relatively standard Python libraries:
 
-1.  [Numpy](http://www.numpy.org/) 
+1.  [Numpy](http://www.numpy.org/)
 2.  [Pandas](http://pandas.pydata.org/)
+
+## Testing
+
+After installing the dependencies, run the test suite with [pytest](https://pytest.org/):
+
+```
+pip install -r requirements.txt
+pytest
+```
 
 ## Usage
 
