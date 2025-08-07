@@ -1,4 +1,7 @@
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 notebook = {
     "cells": [
@@ -8,16 +11,10 @@ notebook = {
             "source": [
                 "# PageRank and TextRank Demo\n",
                 "\n",
-                "This notebook demonstrates the usage of both the PageRank algorithm and TextRank for keyword extraction."
-            ]
+                "This notebook demonstrates the usage of both the PageRank algorithm and TextRank for keyword extraction.",
+            ],
         },
-        {
-            "cell_type": "markdown",
-            "metadata": {},
-            "source": [
-                "## Setup and Imports"
-            ]
-        },
+        {"cell_type": "markdown", "metadata": {}, "source": ["## Setup and Imports"]},
         {
             "cell_type": "code",
             "execution_count": None,
@@ -35,13 +32,15 @@ notebook = {
                 "import pandas as pd\n",
                 "import matplotlib.pyplot as plt\n",
                 "import seaborn as sns\n",
+                "import logging\n",
                 "\n",
                 "# Set up plotting style\n",
                 "plt.style.use('default')\n",
-                "sns.set_palette(\"husl\")\n",
+                'sns.set_palette("husl")\n',
+                "logging.basicConfig(level=logging.INFO)\n",
                 "\n",
-                "print(\"Setup complete!\")"
-            ]
+                'logging.info("Setup complete!")',
+            ],
         },
         {
             "cell_type": "markdown",
@@ -49,8 +48,8 @@ notebook = {
             "source": [
                 "## 1. Basic PageRank Examples\n",
                 "\n",
-                "Let's start with some simple graph examples to understand how PageRank works."
-            ]
+                "Let's start with some simple graph examples to understand how PageRank works.",
+            ],
         },
         {
             "cell_type": "code",
@@ -60,17 +59,17 @@ notebook = {
             "source": [
                 "# Define a simple triangle graph\n",
                 "triangle_graph = {\n",
-                "    \"A\": {\"B\": 1, \"C\": 1},\n",
-                "    \"B\": {\"C\": 1},\n",
-                "    \"C\": {\"A\": 1},\n",
+                '    "A": {"B": 1, "C": 1},\n',
+                '    "B": {"C": 1},\n',
+                '    "C": {"A": 1},\n',
                 "}\n",
                 "\n",
                 "# Calculate PageRank scores\n",
                 "triangle_scores = pagerank.power_iteration(triangle_graph)\n",
-                "print(\"Triangle Graph PageRank Scores:\")\n",
-                "print(triangle_scores)\n",
-                "print(f\"\\nSum of scores: {triangle_scores.sum():.6f}\")"
-            ]
+                'logging.info("Triangle Graph PageRank Scores:")\n',
+                "logging.info(triangle_scores)\n",
+                'logging.info(f"\\nSum of scores: {triangle_scores.sum():.6f}")',
+            ],
         },
         {
             "cell_type": "markdown",
@@ -78,8 +77,8 @@ notebook = {
             "source": [
                 "## 2. TextRank for Keyword Extraction\n",
                 "\n",
-                "Now let's explore TextRank, which applies PageRank to extract keywords from text documents."
-            ]
+                "Now let's explore TextRank, which applies PageRank to extract keywords from text documents.",
+            ],
         },
         {
             "cell_type": "code",
@@ -88,18 +87,18 @@ notebook = {
             "outputs": [],
             "source": [
                 "# Simple text example\n",
-                "simple_text = \"\"\"\n",
+                'simple_text = """\n',
                 "Natural language processing is a subfield of linguistics, computer science, \n",
                 "and artificial intelligence concerned with the interactions between computers \n",
                 "and human language. In particular, how to program computers to process and \n",
                 "analyze large amounts of natural language data.\n",
-                "\"\"\"\n",
+                '"""\n',
                 "\n",
                 "# Extract keywords\n",
                 "simple_keywords = textrank(simple_text)\n",
-                "print(\"Top 10 Keywords from Simple Text:\")\n",
-                "print(simple_keywords.head(10))"
-            ]
+                'logging.info("Top 10 Keywords from Simple Text:")\n',
+                "logging.info(simple_keywords.head(10))",
+            ],
         },
         {
             "cell_type": "markdown",
@@ -107,8 +106,8 @@ notebook = {
             "source": [
                 "## 3. Visualizing Results\n",
                 "\n",
-                "Let's create some visualizations to better understand the results."
-            ]
+                "Let's create some visualizations to better understand the results.",
+            ],
         },
         {
             "cell_type": "code",
@@ -130,8 +129,8 @@ notebook = {
                 "\n",
                 "# Improve layout\n",
                 "plt.tight_layout()\n",
-                "plt.show()"
-            ]
+                "plt.show()",
+            ],
         },
         {
             "cell_type": "markdown",
@@ -145,34 +144,32 @@ notebook = {
                 "2. **TextRank for Keywords**: Extracting significant keywords from text documents\n",
                 "3. **Visualizations**: Various ways to visualize and compare results\n",
                 "\n",
-                "The PageRank and TextRank implementations are robust, well-tested, and ready for production use."
-            ]
-        }
+                "The PageRank and TextRank implementations are robust, well-tested, and ready for production use.",
+            ],
+        },
     ],
     "metadata": {
         "kernelspec": {
             "display_name": "Python 3",
             "language": "python",
-            "name": "python3"
+            "name": "python3",
         },
         "language_info": {
-            "codemirror_mode": {
-                "name": "ipython",
-                "version": 3
-            },
+            "codemirror_mode": {"name": "ipython", "version": 3},
             "file_extension": ".py",
             "mimetype": "text/x-python",
             "name": "python",
             "nbconvert_exporter": "python",
             "pygments_lexer": "ipython3",
-            "version": "3.8.0"
-        }
+            "version": "3.8.0",
+        },
     },
     "nbformat": 4,
-    "nbformat_minor": 4
+    "nbformat_minor": 4,
 }
 
-with open('demo.ipynb', 'w') as f:
+with open("demo.ipynb", "w") as f:
     json.dump(notebook, f, indent=2)
 
-print('Jupyter notebook created successfully!')
+logging.basicConfig(level=logging.INFO)
+logger.info("Jupyter notebook created successfully!")
