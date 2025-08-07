@@ -1,5 +1,5 @@
 import math
-from typing import Dict, List, Union
+from typing import Mapping, Sequence, cast
 
 import numpy
 import pandas
@@ -133,7 +133,8 @@ def __integrate_random_surfer(
 
 
 def power_iteration(
-    transition_weights: Union[Dict[str, Dict[str, float]], List[List[float]]],
+    transition_weights: Mapping[str, Mapping[str, float | int]]
+    | Sequence[Sequence[float | int]],
     rsp: float = 0.15,
     epsilon: float = 0.00001,
     max_iterations: int = 1000,
@@ -181,9 +182,12 @@ def power_iteration(
 
     for _iteration in range(max_iterations):
         old_state = state.copy()
-        state = state.dot(transition_probabilities)
+        state = cast(
+            pandas.Series,
+            state.dot(transition_probabilities),  # type: ignore[reportArgumentType]
+        )
         delta = state - old_state
         if __euclidean_norm(delta) < epsilon:
             break
 
-    return state
+    return cast(pandas.Series, state)

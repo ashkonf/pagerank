@@ -69,8 +69,9 @@ include = ["pagerank.py", "TextRank/", "tests/"]
 exclude = ["**/__pycache__"]
 reportMissingImports = true
 reportMissingTypeStubs = false
-pythonVersion = "3.8"
+pythonVersion = "3.10"
 pythonPlatform = "Linux"
+typeCheckingMode = "basic"
 
 [tool.coverage.run]
 source = ["."]
