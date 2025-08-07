@@ -1,10 +1,7 @@
-# pagerank
+
 
 <div align="center">
-  <a href="https://github.com/ashkonf/pagerank">
-    <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=PageRank" alt="PageRank Logo">
-  </a>
-  <h1>PageRank and TextRank</h1>
+  # pagerank
   <p>
     A lightweight, well-tested Python implementation of Google's PageRank algorithm and TextRank for keyword extraction.
   </p>
