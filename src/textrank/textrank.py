@@ -1,13 +1,16 @@
 import collections
 import logging
 import os
-from typing import Any, List
+from typing import List
 
 import nltk
+import pandas
 
 import pagerank
 
 logger = logging.getLogger(__name__)
+
+PUNCTUATION = {".", "?", "!", ",", '"', ":", ";", "'", "-"}
 
 """
     textrank.py
@@ -59,7 +62,7 @@ def textrank(
     window_size: int = 2,
     rsp: float = 0.15,
     relevant_pos_tags: List[str] | None = None,
-) -> Any:
+) -> pandas.Series:
     """Apply TextRank algorithm to extract keyword significance scores from a document.
 
     This function implements the TextRank algorithm by creating a graph representation
@@ -78,7 +81,8 @@ def textrank(
     Returns:
         A pandas Series (that can be treated as a dictionary) that maps words in the
         document to their associated TextRank significance scores. Note that only words
-        that are classified as having relevant POS tags are present in the result.
+        that are classified as having relevant POS tags are present in the result. The
+        series is sorted in descending order of significance.
 
     Example:
         >>> import logging
@@ -94,8 +98,6 @@ def textrank(
     words = __preprocess_document(document, relevant_pos_tags)
 
     if not words:
-        import pandas
-
         return pandas.Series(dtype=float)
 
     # Build a weighted graph where nodes are words and
@@ -118,12 +120,10 @@ def textrank(
     }
 
     if not edge_weights_dict:
-        import pandas
-
         return pandas.Series(dtype=float)
 
     word_probabilities = pagerank.power_iteration(edge_weights_dict, rsp=rsp)
-    word_probabilities.sort_values(ascending=False)
+    word_probabilities = word_probabilities.sort_values(ascending=False)
 
     return word_probabilities
 
@@ -152,7 +152,7 @@ def __is_punctuation(word: str) -> bool:
     Returns:
         True if the word is punctuation, False otherwise.
     """
-    return word in [".", "?", "!", ",", '"', ":", ";", "'", "-"]
+    return word in PUNCTUATION
 
 
 def __tag_parts_of_speech(words: List[str]) -> List[str]:
@@ -200,7 +200,8 @@ def apply_text_rank(file_name: str, title: str = "a document") -> None:
     """
     logger.info('Reading "%s" ...', title)
     file_path = os.path.join(os.path.dirname(__file__), file_name)
-    document = open(file_path).read()
+    with open(file_path, encoding="utf-8") as file:
+        document = file.read()
     document = __ascii_only(document)
 
     logger.info('Applying TextRank to "%s" ...', title)
