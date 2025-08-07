@@ -17,8 +17,6 @@ jobs:
         run: uv python install 3.12
       - name: Install dependencies
         run: uv sync --all-extras
-      - name: Download NLTK data
-        run: uv run python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger')"
       - name: Run ruff check
         run: uv run ruff check .
       - name: Run ruff format check
@@ -26,9 +24,9 @@ jobs:
       - name: Run pyright
         run: uv run pyright .
       - name: Run tests with coverage
-        run: uv run pytest --cov=. --cov-report=xml --cov-report=term-missing
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        run: uv run pytest --cov --cov-branch --cov-report=xml
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          file: ./coverage.xml
-          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: ashkonf/pagerank

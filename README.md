@@ -1,36 +1,16 @@
-# pagerank
-
 <div align="center">
-  <a href="https://github.com/ashkonf/pagerank">
-    <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=PageRank" alt="PageRank Logo">
-  </a>
-  <h1>PageRank and TextRank</h1>
-  <p>
-    A lightweight, well-tested Python implementation of Google's PageRank algorithm and TextRank for keyword extraction.
-  </p>
-  <p>
-    <a href="https://pypi.org/project/pagerank/">
-      <img alt="PyPI" src="https://img.shields.io/pypi/v/pagerank.svg">
-    </a>
-    <a href="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml">
-      <img alt="CI" src="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml/badge.svg">
-    </a>
-    <a href="https://codecov.io/gh/ashkonf/pagerank">
-      <img alt="Codecov" src="https://codecov.io/gh/ashkonf/pagerank/graph/badge.svg?token=YOUR_TOKEN_HERE"/>
-    </a>
-    <a href="https://github.com/ashkonf/pagerank/blob/main/LICENSE">
-      <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg"/>
-    </a>
-    <a href="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml">
-      <img alt="Pytest" src="https://img.shields.io/github/actions/workflow/status/ashkonf/pagerank/ci.yml?label=pytest&logo=pytest"/>
-    </a>
-    <a href="https://github.com/ashkonf/pagerank/actions/workflows/ci.yml">
-      <img alt="Pyright" src="https://img.shields.io/github/actions/workflow/status/ashkonf/pagerank/ci.yml?label=pyright&logo=python"/>
-    </a>
-    <a href="https://results.pre-commit.ci/latest/github/ashkonf/pagerank/main">
-      <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/ashkonf/pagerank/main.svg"/>
-    </a>
-  </p>
+  # pagerank
+
+  [![PyPI version](https://img.shields.io/pypi/v/your-package)](link-to-pypi-page)
+  [![codecov](https://codecov.io/github/ashkonf/html-table-scraper/graph/badge.svg?token=7Y596J8IYZ)](https://codecov.io/github/ashkonf/pagerank)
+  [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+  [![Pytest](https://img.shields.io/badge/pytest-✓-brightgreen)](https://docs.pytest.org)
+  [![Pyright](https://img.shields.io/badge/pyright-✓-green)](https://github.com/microsoft/pyright)
+  [![Ruff](https://img.shields.io/badge/ruff-✓-blue?logo=ruff)](https://github.com/astral-sh/ruff)
+  [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+  [![Build Status](https://img.shields.io/github/actions/workflow/status/ashkonf/pagerank/ci.yml?branch=main)](https://github.com/ashkonf/pagerank/actions/workflows/ci.yml?query=branch%3Amain)
+
+  A lightweight, well-tested Python implementation of Google's PageRank algorithm and TextRank for keyword extraction.
 </div>
 
 ## Features
